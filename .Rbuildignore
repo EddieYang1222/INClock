@@ -1,2 +1,4 @@
+^renv$
+^renv\.lock$
 ^Intrinomap\.Rproj$
 ^\.Rproj\.user$
