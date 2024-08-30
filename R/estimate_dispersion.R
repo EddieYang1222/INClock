@@ -1,0 +1,117 @@
+#' Estimate dispersion parameters
+#'
+#' @param counts An expression count matrix. The rows correspond to genes and
+#' the columns correspond to cells. It can be sparse.
+#' @param manifold The computed manifold from compute_manifold. It should be a matrix
+#' of the same dimension as counts.
+#' @param cell.types A vector with the same length as the columns of counts. Each value should be
+#' a string corresponding to the cell type of each cell in counts.
+#' @param ages A vector with the same length as the columns of counts. Each value should be
+#' a string corresponding to the age group of each cell in counts.
+#' @param model Model to be used for estimating dispersion parameters. Can be either "cCV" (constant CV),
+#' "cFF" (constant Fano factor), or "cVar" (constant variance).
+#' @param preprocess Whether the expression count matrix should be preprocessed,
+#' where all genes with zero counts will removed. Default is TRUE.
+#' @param ncores Number of cores to use. Default is 1.
+#' @param size.factor A vector of cell size normalization factors.
+#' Default uses mean library size normalization.
+#' @param cell.types.to.use A vector of unique cell types to be used in the estimation process.
+#' Default is all cell types.
+#' @param ages.to.use A vector of unique age groups to be used in the estimation process.
+#' Default is all age groups.
+#' @param cell.types.cutoff Minimum number of cells in a cell type x age group. Default is 10.
+#'
+#' @return A named list for all dispersion parameters. Each element is a table
+#' of dispersion parameters for a cell type. The columns in each table contain
+#' dispersion parameters for each age group.
+#' @export
+#'
+#' @examples
+#' load('./data/TMS_marrow.RData')
+#' load('./data/TMS_marrow_manifold.RData')
+#'
+#' ages <- data.frame(index=dataset.age)
+#' age_map <- data.frame(index=c(1:length(dataset.age.levels)),
+#' age = dataset.age.levels)
+#' celltypes <- data.frame(index=dataset.celltype)
+#' celltype_map <- data.frame(index=c(1:length(dataset.celltype.levels)),
+#' celltype = dataset.celltype.levels)
+#' ages <- join(ages, age_map)
+#' celltypes <- join(celltypes, celltype_map)
+#'
+#' estimate_dispersion(dataset.counts, dataset.saver$estimate, celltypes$celltype, ages$age,
+#'                     model = 'cCV', ncores = 4, cell.types.cutoff = 10)
+#'
+estimate_dispersion <- function(counts, manifold, cell.types, ages, model = 'cCV', preprocess = TRUE, ncores = 1,
+                                size.factor = NULL, cell.types.to.use = NULL, ages.to.use = NULL,
+                                cell.types.cutoff = 10) {
+  if (!preprocess) {
+    counts <- counts[rowSums(counts) != 0,]
+  }
+
+  if (is.null(size.factor)) {
+    size.factor <- colSums(counts) / mean(colSums(counts))
+  }
+
+  # Keep only specific cell types and ages, if necessary
+  if (!is.null(cell.types.to.use)) {
+    cell.types.index <- which(cell.types %in% c(cell.types.to.use))
+    counts <- counts[,cell.types.index]
+    manifold <- manifold[,cell.types.index]
+    cell.types <- cell.types[cell.types.index]
+    ages <- ages[cell.types.index]
+  }
+
+  if (!is.null(ages.to.use)) {
+    ages.index <- which(ages %in% c(ages.to.use))
+    counts <- counts[,ages.index]
+    manifold <- manifold[,ages.index]
+    cell.types <- cell.types[ages.index]
+    ages <- ages[ages.index]
+  }
+
+  cell.types.levels <- levels(cell.types)
+  ages.levels <- levels(ages)
+  cell.types.nums <- as.numeric(cell.types)
+  ages.nums <- as.numeric(ages)
+
+  # Estimate dispersion parameters
+  dispersion.list <- list()
+  for(i in 1:max(cell.types.nums)) {
+    for (j in 1:max(ages.nums)) {
+      index <- rep(0, ncol(counts))
+      for (k in 1:ncol(counts)) {
+        index[k] <- cell.types.nums[k] == i && ages.nums[k] == j
+      }
+      if (sum(index) >= cell.types.cutoff) {
+        # Subset counts and normalize to match original manifold fitting
+        celltype.counts.age.norm <- sweep(counts[, index == 1], 2, size.factor[index == 1], "/")
+        # Subset the manifold
+        celltype.mu.age <- manifold[, index == 1]
+        # Run SAVER-D on the cell type and age specific subset
+        celltype.saver.age <- SAVER::saver(celltype.counts.age.norm, mu = celltype.mu.age, ncores = ncores)
+
+        # assign(paste0("data.size",j), sum(index))
+        if (model == 'cCV') {
+          assign(paste0("data.disp",j), dataset.saver.celltype.age$a)
+        } else if (model == 'cFF') {
+          assign(paste0("data.disp",j), dataset.saver.celltype.age$b)
+        } else if (model =='cVar') {
+          assign(paste0("data.disp",j), 1 / dataset.saver.celltype.age$k)
+        } else {
+          assign(paste0("data.disp",j), vector())
+        }
+      } else {
+        assign(paste0("data.disp",j), vector())
+      }
+    }
+    # Put together cell type specific dispersion tables
+    celltype.disp <- data.frame('gene'= rownames(counts))
+    for (j in 1:max(ages.nums)) {
+      assign(disp.to.be.added, paste0("data.disp",j))
+      celltype.disp[ages.levels[j]] <- disp.to.be.added
+    }
+    dispersion.list[[cell.types.levels[i]]] <- celltype.disp
+  }
+  dispersion.list
+}
