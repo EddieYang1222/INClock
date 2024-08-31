@@ -25,7 +25,7 @@ compute_manifold <- function(counts, method = 'SAVER', preprocess = TRUE,
     stop("Count matrix is missing row names or column names.")
   }
 
-  if (!preprocess) {
+  if (preprocess) {
     counts <- counts[rowSums(counts) != 0,]
   }
 
