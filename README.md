@@ -1,2 +1,2 @@
-# Intrinomap
- Intrinsic noise mapping from manifold projection
+# INClock
+ Intrinsic Noise based cellular aging Clock
