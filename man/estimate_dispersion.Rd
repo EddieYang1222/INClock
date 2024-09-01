@@ -60,8 +60,7 @@ Estimate dispersion parameters
 }
 \examples{
 # Loading test data from Tabula Muris Senis
-library(TabulaMurisSenisData)
-tms_marrow <- TabulaMurisSenisDroplet(tissues = "Marrow")
+tms_marrow <- TabulaMurisSenisData::TabulaMurisSenisDroplet(tissues = "Marrow")
 tms_marrow_counts <- tms_marrow$Marrow@assays@data$counts
 rownames(tms_marrow_counts) <- rownames(tms_marrow$Marrow)
 colnames(tms_marrow_counts) <- colnames(tms_marrow$Marrow)
@@ -79,6 +78,6 @@ tms_marrow_manifold_neighbor <- compute_manifold(tms_marrow_counts, method = "ne
 tms_marrow_dispersions <- estimate_dispersion(tms_marrow_counts, tms_marrow_manifold_neighbor,
   tms_marrow$Marrow$cell_ontology_class[intersect(tms_marrow_ages, tms_marrow_cell_types)],
   tms_marrow$Marrow$age[intersect(tms_marrow_ages, tms_marrow_cell_types)],
-  model = "cCV", ncores = 4, cell.types.cutoff = 10)
+  model = "cCV", ncores = 2, cell.types.cutoff = 10)
 
 }
