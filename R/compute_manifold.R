@@ -13,14 +13,29 @@
 #' @param neighbors Number of neighbors to output. Default is 20. (Neighbor-based only)
 #'
 #' @return A matrix of estimated gene expressions.
-#' @importFrom Matrix sparseMatrix rowMeans
+#' @importFrom Matrix sparseMatrix rowSums rowMeans
 #' @importFrom pbapply pbapply
+#' @importFrom methods as
 #' @importFrom Seurat CreateSeuratObject NormalizeData FindVariableFeatures ScaleData RunPCA FindNeighbors GetAssayData VariableFeatures
 #' @export
 #' @examples
-#' load("./data/TMS_marrow.RData")
-#' compute_manifold(dataset.counts, method = "SAVER")
-#' compute_manifold(dataset.counts, method = "neighbor")
+#' # Loading test data from Tabula Muris Senis
+#' devtools::install_github("fmicompbio/TabulaMurisSenisData")
+#' library(TabulaMurisSenisData)
+#' tms_marrow <- TabulaMurisSenisDroplet(tissues = "Marrow")
+#' tms_marrow_counts <- tms_marrow$Marrow@assays@data$counts
+#' rownames(tms_marrow_counts) <- rownames(tms_marrow$Marrow)
+#' colnames(tms_marrow_counts) <- colnames(tms_marrow$Marrow)
+#' tms_marrow_counts <- as(tms_marrow_counts, "dgCMatrix")
+#'
+#' tms_marrow_ages <- which(tms_marrow$Marrow$age %in% c("3m", "30m"))
+#' tms_marrow_cell_types <- which(tms_marrow$Marrow$cell_ontology_class %in% c('erythroid progenitor',
+#' 'granulocytopoietic cell', 'hematopoietic precursor cell',
+#' 'megakaryocyte-erythroid progenitor cell', 'precursor B cell'))
+#' tms_marrow_counts <- tms_marrow_counts[, intersect(tms_marrow_ages, tms_marrow_cell_types)]
+#'
+#' # tms_marrow_manifold_saver <- compute_manifold(tms_marrow_counts, method = "SAVER")
+#' tms_marrow_manifold_neighbor <- compute_manifold(tms_marrow_counts, method = "neighbor")
 compute_manifold <- function(counts, method = "SAVER", preprocess = TRUE,
                              ncores = 1, nfeatures = 3000, dims = 20, neighbors = 20) {
   message("Starting manifold computation...\n")
@@ -34,7 +49,7 @@ compute_manifold <- function(counts, method = "SAVER", preprocess = TRUE,
     counts <- counts[rowSums(counts) != 0, ]
     message(
       "After removing genes with zero counts, the new matrix size is ",
-      nrow(counts), " genes and ", ncol(counts), " cells."
+      nrow(counts), " genes and ", ncol(counts), " cells.\n"
     )
   }
 
@@ -73,11 +88,11 @@ compute_manifold <- function(counts, method = "SAVER", preprocess = TRUE,
       rowMeans(manifold_counts[, idx])
     })
 
-    manifold <- t(manifold)
+    dimnames(manifold) <- dimnames(manifold_counts)
 
     end.time <- Sys.time()
     time.taken <- round(difftime(end.time, start.time, units = "secs"), 2)
-    print(paste0("Finished computing manifold using the neighbor-based method. Time taken: ", time.taken, " seconds.\n"))
+    message("Finished computing manifold using the neighbor-based method. Time taken: ", time.taken, " seconds.\n")
     return(manifold)
   } else {
     stop("Invalid method specified. Choose either 'SAVER' or 'neighbor'.")

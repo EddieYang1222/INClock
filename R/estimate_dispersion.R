@@ -24,28 +24,32 @@
 #' @return A named list for all dispersion parameters. Each element is a table
 #' of dispersion parameters for a cell type. The columns in each table contain
 #' dispersion parameters for each age group.
+#' @importFrom Matrix rowSums colSums
 #' @export
 #'
 #' @examples
-#' load("./data/TMS_marrow.RData")
-#' load("./data/TMS_marrow_manifold.RData")
+#' # Loading test data from Tabula Muris Senis
+#' devtools::install_github('fmicompbio/TabulaMurisSenisData')
+#' library(TabulaMurisSenisData)
+#' tms_marrow <- TabulaMurisSenisDroplet(tissues = "Marrow")
+#' tms_marrow_counts <- tms_marrow$Marrow@assays@data$counts
+#' rownames(tms_marrow_counts) <- rownames(tms_marrow$Marrow)
+#' colnames(tms_marrow_counts) <- colnames(tms_marrow$Marrow)
+#' tms_marrow_counts <- as(tms_marrow_counts, "dgCMatrix")
 #'
-#' ages <- data.frame(index = dataset.age)
-#' age_map <- data.frame(
-#'   index = c(1:length(dataset.age.levels)),
-#'   age = dataset.age.levels
-#' )
-#' celltypes <- data.frame(index = dataset.celltype)
-#' celltype_map <- data.frame(
-#'   index = c(1:length(dataset.celltype.levels)),
-#'   celltype = dataset.celltype.levels
-#' )
-#' ages <- join(ages, age_map)
-#' celltypes <- join(celltypes, celltype_map)
+#' tms_marrow_ages <- which(tms_marrow$Marrow$age %in% c("3m", "30m"))
+#' tms_marrow_cell_types <- which(tms_marrow$Marrow$cell_ontology_class %in% c('erythroid progenitor',
+#' 'granulocytopoietic cell', 'hematopoietic precursor cell',
+#' 'megakaryocyte-erythroid progenitor cell', 'precursor B cell'))
+#' tms_marrow_counts <- tms_marrow_counts[, intersect(tms_marrow_ages, tms_marrow_cell_types)]
 #'
-#' estimate_dispersion(dataset.counts, dataset.saver$estimate, celltypes$celltype, ages$age,
-#'   model = "cCV", ncores = 4, cell.types.cutoff = 10
-#' )
+#' tms_marrow_manifold_neighbor <- compute_manifold(tms_marrow_counts, method = "neighbor")
+#'
+#'
+#' tms_marrow_dispersions <- estimate_dispersion(tms_marrow_counts, tms_marrow_manifold_neighbor,
+#'   tms_marrow$Marrow$cell_ontology_class[intersect(tms_marrow_ages, tms_marrow_cell_types)],
+#'   tms_marrow$Marrow$age[intersect(tms_marrow_ages, tms_marrow_cell_types)],
+#'   model = "cCV", ncores = 4, cell.types.cutoff = 10)
 #'
 estimate_dispersion <- function(counts, manifold, cell.types, ages, model = "cCV", preprocess = TRUE, ncores = 1,
                                 size.factor = NULL, cell.types.to.use = NULL, ages.to.use = NULL,

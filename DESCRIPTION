@@ -11,10 +11,12 @@ RoxygenNote: 7.3.2
 Suggests: 
     renv
 Depends: 
-    R (>= 4.2.3)
+    R (>= 4.2.0)
 Imports: 
     Matrix,
-    Seurat
+    Seurat,
+    pbapply,
+    methods
 Remotes:
     mohuangx/SAVER,
     EddieYang1222/SAVER_D
