@@ -74,7 +74,6 @@ tms_marrow_counts <- tms_marrow_counts[, intersect(tms_marrow_ages, tms_marrow_c
 
 tms_marrow_manifold_neighbor <- compute_manifold(tms_marrow_counts, method = "neighbor")
 
-
 tms_marrow_dispersions <- estimate_dispersion(tms_marrow_counts, tms_marrow_manifold_neighbor,
   tms_marrow$Marrow$cell_ontology_class[intersect(tms_marrow_ages, tms_marrow_cell_types)],
   tms_marrow$Marrow$age[intersect(tms_marrow_ages, tms_marrow_cell_types)],
