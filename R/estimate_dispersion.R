@@ -25,6 +25,7 @@
 #' of dispersion parameters for a cell type. The columns in each table contain
 #' dispersion parameters for each age group.
 #' @importFrom Matrix rowSums colSums
+#' @import S4Vectors
 #' @export
 #'
 #' @examples

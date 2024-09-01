@@ -17,6 +17,7 @@
 #' @importFrom pbapply pbapply
 #' @importFrom methods as
 #' @importFrom Seurat CreateSeuratObject NormalizeData FindVariableFeatures ScaleData RunPCA FindNeighbors GetAssayData VariableFeatures
+#' @import S4Vectors
 #' @export
 #' @examples
 #' # Loading test data from Tabula Muris Senis

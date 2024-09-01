@@ -16,7 +16,8 @@ Imports:
     Matrix,
     Seurat,
     pbapply,
-    methods
+    methods,
+    S4Vectors
 Remotes:
     mohuangx/SAVER,
     EddieYang1222/SAVER_D
