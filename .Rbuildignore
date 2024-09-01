@@ -2,3 +2,4 @@
 ^renv\.lock$
 ^Intrinomap\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$
