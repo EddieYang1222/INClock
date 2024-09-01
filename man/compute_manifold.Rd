@@ -40,7 +40,7 @@ A matrix of estimated gene expressions.
 Compute the manifold of gene expressions
 }
 \examples{
-load('./data/TMS_marrow.RData')
-compute_manifold(dataset.counts, method='SAVER')
-compute_manifold(dataset.counts, method='neighbor')
+load("./data/TMS_marrow.RData")
+compute_manifold(dataset.counts, method = "SAVER")
+compute_manifold(dataset.counts, method = "neighbor")
 }

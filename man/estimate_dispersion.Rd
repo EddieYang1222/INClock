@@ -59,19 +59,24 @@ dispersion parameters for each age group.
 Estimate dispersion parameters
 }
 \examples{
-load('./data/TMS_marrow.RData')
-load('./data/TMS_marrow_manifold.RData')
+load("./data/TMS_marrow.RData")
+load("./data/TMS_marrow_manifold.RData")
 
-ages <- data.frame(index=dataset.age)
-age_map <- data.frame(index=c(1:length(dataset.age.levels)),
-age = dataset.age.levels)
-celltypes <- data.frame(index=dataset.celltype)
-celltype_map <- data.frame(index=c(1:length(dataset.celltype.levels)),
-celltype = dataset.celltype.levels)
+ages <- data.frame(index = dataset.age)
+age_map <- data.frame(
+  index = c(1:length(dataset.age.levels)),
+  age = dataset.age.levels
+)
+celltypes <- data.frame(index = dataset.celltype)
+celltype_map <- data.frame(
+  index = c(1:length(dataset.celltype.levels)),
+  celltype = dataset.celltype.levels
+)
 ages <- join(ages, age_map)
 celltypes <- join(celltypes, celltype_map)
 
 estimate_dispersion(dataset.counts, dataset.saver$estimate, celltypes$celltype, ages$age,
-                    model = 'cCV', ncores = 4, cell.types.cutoff = 10)
+  model = "cCV", ncores = 4, cell.types.cutoff = 10
+)
 
 }

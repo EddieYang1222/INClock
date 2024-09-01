@@ -13,58 +13,73 @@
 #' @param neighbors Number of neighbors to output. Default is 20. (Neighbor-based only)
 #'
 #' @return A matrix of estimated gene expressions.
-#' @import Seurat
+#' @importFrom Matrix sparseMatrix rowMeans
+#' @importFrom pbapply pbapply
+#' @importFrom Seurat CreateSeuratObject NormalizeData FindVariableFeatures ScaleData RunPCA FindNeighbors GetAssayData VariableFeatures
 #' @export
 #' @examples
-#' load('./data/TMS_marrow.RData')
-#' compute_manifold(dataset.counts, method='SAVER')
-#' compute_manifold(dataset.counts, method='neighbor')
-compute_manifold <- function(counts, method = 'SAVER', preprocess = TRUE,
+#' load("./data/TMS_marrow.RData")
+#' compute_manifold(dataset.counts, method = "SAVER")
+#' compute_manifold(dataset.counts, method = "neighbor")
+compute_manifold <- function(counts, method = "SAVER", preprocess = TRUE,
                              ncores = 1, nfeatures = 3000, dims = 20, neighbors = 20) {
+  message("Starting manifold computation...\n")
+
   if (is.null(rownames(counts)) || is.null(colnames(counts))) {
     stop("Count matrix is missing row names or column names.")
   }
 
   if (preprocess) {
-    counts <- counts[rowSums(counts) != 0,]
+    message("The initial matrix size is ", nrow(counts), " genes and ", ncol(counts), " cells.")
+    counts <- counts[rowSums(counts) != 0, ]
+    message(
+      "After removing genes with zero counts, the new matrix size is ",
+      nrow(counts), " genes and ", ncol(counts), " cells."
+    )
   }
 
-  if (method == 'SAVER') {
+  if (method == "SAVER") {
     # Estimate manifold with SAVER
+    message("Estimating the manifold using the SAVER method...\n")
     start.time <- Sys.time()
     manifold <- SAVER::saver(counts, ncores = ncores)
     end.time <- Sys.time()
-    time.taken <- round(end.time - start.time,2)
-    print(paste0('Finished computing manifold. Time taken: ', time.taken))
+    time.taken <- round(difftime(end.time, start.time), 2)
+    message("Finished computing manifold using SAVER. Time taken: ", time.taken, ".\n")
     manifold
-  } else if (method == 'neighbor') {
+  } else if (method == "neighbor") {
     # Find neighbors
+    message("Estimating the manifold using the neighbor-based method...\n")
     manifold_obj <- CreateSeuratObject(counts = counts)
     manifold_obj <- NormalizeData(manifold_obj, normalization.method = "LogNormalize", scale.factor = 10000)
     manifold_obj <- FindVariableFeatures(manifold_obj, selection.method = "vst", nfeatures = nfeatures)
     manifold_obj <- ScaleData(manifold_obj, features = rownames(manifold_obj))
     manifold_obj <- RunPCA(manifold_obj, features = VariableFeatures(object = manifold_obj))
-    manifold_obj <- FindNeighbors(manifold_obj, dims=1:dims, k.param = neighbors+1, return.neighbor=TRUE)
+    manifold_obj <- FindNeighbors(manifold_obj, dims = 1:dims, k.param = neighbors + 1, return.neighbor = TRUE)
 
     # Calculate mean count for each cell
     manifold_counts <- GetAssayData(object = manifold_obj, assay = "RNA", layer = "counts")
-    print(paste0('Successfully extracted the nearest neighbors. Estimation procedure is starting.'))
-    manifold <- Matrix::sparseMatrix(i = integer(0), j = integer(0),
-                             dims = manifold_counts@Dim, dimnames = manifold_counts@Dimnames)
+    print(paste0("Successfully extracted the nearest neighbors. Estimation procedure is starting."))
+    manifold <- Matrix::sparseMatrix(
+      i = integer(0), j = integer(0),
+      dims = manifold_counts@Dim, dimnames = manifold_counts@Dimnames
+    )
     manifold <- as(manifold, "dMatrix")
     manifold_neighbor_idx <- manifold_obj@neighbors$RNA.nn@nn.idx
 
     start.time <- Sys.time()
-    for (j in 1:dim(manifold)[2]) {
-      # Extract the indices of the nearest neighbors
-      neighbor_idx <- manifold_neighbor_idx[j,-1]
-      neighbor_counts <- Matrix::rowMeans(manifold_counts[,neighbor_idx]) # size factor
-      # Store the result in the data frame
-      manifold[,j] <- neighbor_counts
-    }
+
+    manifold <- pbapply(manifold_neighbor_idx[, -1], 1, function(idx) {
+      rowMeans(manifold_counts[, idx])
+    })
+
+    manifold <- t(manifold)
+
     end.time <- Sys.time()
-    time.taken <- round(end.time - start.time,2)
-    print(paste0('Finished computing manifold. Time taken: ', time.taken))
+    time.taken <- round(difftime(end.time, start.time), 2)
+    print(paste0("Finished computing manifold using the neighbor-based method. Time taken: ", time.taken, ".\n"))
     manifold
+  } else {
+    stop("Invalid method specified. Choose either 'SAVER' or 'neighbor'.")
   }
 }

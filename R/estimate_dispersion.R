@@ -27,30 +27,37 @@
 #' @export
 #'
 #' @examples
-#' load('./data/TMS_marrow.RData')
-#' load('./data/TMS_marrow_manifold.RData')
+#' load("./data/TMS_marrow.RData")
+#' load("./data/TMS_marrow_manifold.RData")
 #'
-#' ages <- data.frame(index=dataset.age)
-#' age_map <- data.frame(index=c(1:length(dataset.age.levels)),
-#' age = dataset.age.levels)
-#' celltypes <- data.frame(index=dataset.celltype)
-#' celltype_map <- data.frame(index=c(1:length(dataset.celltype.levels)),
-#' celltype = dataset.celltype.levels)
+#' ages <- data.frame(index = dataset.age)
+#' age_map <- data.frame(
+#'   index = c(1:length(dataset.age.levels)),
+#'   age = dataset.age.levels
+#' )
+#' celltypes <- data.frame(index = dataset.celltype)
+#' celltype_map <- data.frame(
+#'   index = c(1:length(dataset.celltype.levels)),
+#'   celltype = dataset.celltype.levels
+#' )
 #' ages <- join(ages, age_map)
 #' celltypes <- join(celltypes, celltype_map)
 #'
 #' estimate_dispersion(dataset.counts, dataset.saver$estimate, celltypes$celltype, ages$age,
-#'                     model = 'cCV', ncores = 4, cell.types.cutoff = 10)
+#'   model = "cCV", ncores = 4, cell.types.cutoff = 10
+#' )
 #'
-estimate_dispersion <- function(counts, manifold, cell.types, ages, model = 'cCV', preprocess = TRUE, ncores = 1,
+estimate_dispersion <- function(counts, manifold, cell.types, ages, model = "cCV", preprocess = TRUE, ncores = 1,
                                 size.factor = NULL, cell.types.to.use = NULL, ages.to.use = NULL,
                                 cell.types.cutoff = 10) {
   if (preprocess) {
     message("Preprocessing the count matrix")
-    message("The initial matrix size is ",nrow(counts)," genes and ",ncol(counts)," cells.")
-    counts <- counts[rowSums(counts) != 0,]
-    message("After removing genes with zero counts, the new matrix size is ",
-            nrow(counts)," genes and ",ncol(counts)," cells.")
+    message("The initial matrix size is ", nrow(counts), " genes and ", ncol(counts), " cells.")
+    counts <- counts[rowSums(counts) != 0, ]
+    message(
+      "After removing genes with zero counts, the new matrix size is ",
+      nrow(counts), " genes and ", ncol(counts), " cells."
+    )
   }
 
   if (is.null(size.factor)) {
@@ -62,8 +69,8 @@ estimate_dispersion <- function(counts, manifold, cell.types, ages, model = 'cCV
   if (!is.null(cell.types.to.use)) {
     message("Selecting specific cell types")
     cell.types.index <- which(cell.types %in% c(cell.types.to.use))
-    counts <- counts[,cell.types.index]
-    manifold <- manifold[,cell.types.index]
+    counts <- counts[, cell.types.index]
+    manifold <- manifold[, cell.types.index]
     cell.types <- cell.types[cell.types.index]
     ages <- ages[cell.types.index]
   }
@@ -71,8 +78,8 @@ estimate_dispersion <- function(counts, manifold, cell.types, ages, model = 'cCV
   if (!is.null(ages.to.use)) {
     message("Selecting specific age groups")
     ages.index <- which(ages %in% c(ages.to.use))
-    counts <- counts[,ages.index]
-    manifold <- manifold[,ages.index]
+    counts <- counts[, ages.index]
+    manifold <- manifold[, ages.index]
     cell.types <- cell.types[ages.index]
     ages <- ages[ages.index]
   }
@@ -86,7 +93,7 @@ estimate_dispersion <- function(counts, manifold, cell.types, ages, model = 'cCV
 
   # Estimate dispersion parameters
   dispersion.list <- list()
-  for(i in 1:max(cell.types.nums)) {
+  for (i in 1:max(cell.types.nums)) {
     for (j in 1:max(ages.nums)) {
       message("Estimating dispersion parameters for ", ages.levels[j], " ", cell.types.levels[i])
       index <- rep(0, ncol(counts))
@@ -102,25 +109,25 @@ estimate_dispersion <- function(counts, manifold, cell.types, ages, model = 'cCV
         celltype.saver.age <- SAVER::saver(celltype.counts.age.norm, mu = celltype.mu.age, ncores = ncores)
 
         # assign(paste0("data.size",j), sum(index))
-        if (model == 'cCV') {
-          assign(paste0("data.disp",j), celltype.saver.age$a)
-        } else if (model == 'cFF') {
-          assign(paste0("data.disp",j), celltype.saver.age$b)
-        } else if (model =='cVar') {
-          assign(paste0("data.disp",j), 1 / celltype.saver.age$k)
+        if (model == "cCV") {
+          assign(paste0("data.disp", j), celltype.saver.age$a)
+        } else if (model == "cFF") {
+          assign(paste0("data.disp", j), celltype.saver.age$b)
+        } else if (model == "cVar") {
+          assign(paste0("data.disp", j), 1 / celltype.saver.age$k)
         } else {
-          assign(paste0("data.disp",j), vector())
+          stop("Invalid model specified. Choose either 'cCV', 'cFF', or 'cVar'.")
         }
       } else {
         message("Skipped due to low cell counts")
-        assign(paste0("data.disp",j), vector())
+        assign(paste0("data.disp", j), vector())
       }
     }
     # Put together cell type specific dispersion tables
-    celltype.disp <- data.frame('gene'= rownames(counts))
+    celltype.disp <- data.frame("gene" = rownames(counts))
     for (j in 1:max(ages.nums)) {
-      if (length(get(paste0("data.disp",j))) > 0) {
-        celltype.disp[ages.levels[j]] <- get(paste0("data.disp",j))
+      if (length(get(paste0("data.disp", j))) > 0) {
+        celltype.disp[ages.levels[j]] <- get(paste0("data.disp", j))
       }
     }
     dispersion.list[[cell.types.levels[i]]] <- celltype.disp
