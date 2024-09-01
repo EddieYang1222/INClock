@@ -17,8 +17,8 @@ Imports:
     Seurat,
     pbapply,
     methods,
-    TabulaMurisSenisData,
-    SAVER
+    SAVER,
+    TabulaMurisSenisData
 Remotes:
     mohuangx/SAVER,
     EddieYang1222/SAVER_D,
