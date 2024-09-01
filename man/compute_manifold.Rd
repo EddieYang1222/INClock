@@ -2,11 +2,11 @@
 % Please edit documentation in R/compute_manifold.R
 \name{compute_manifold}
 \alias{compute_manifold}
-\title{Compute the manifold of gene expressions}
+\title{Compute a manifold for gene expression count data}
 \usage{
 compute_manifold(
   counts,
-  method = "SAVER",
+  method = "neighbor",
   preprocess = TRUE,
   ncores = 1,
   nfeatures = 3000,
@@ -37,22 +37,25 @@ where all genes with zero counts will removed. Default is TRUE.}
 A matrix of estimated gene expressions.
 }
 \description{
-Compute the manifold of gene expressions
+Compute a manifold for gene expression count data
 }
 \examples{
-# Loading test data from Tabula Muris Senis
+# Load test data from Tabula Muris Senis
 tms_marrow <- TabulaMurisSenisData::TabulaMurisSenisDroplet(tissues = "Marrow")
 tms_marrow_counts <- tms_marrow$Marrow@assays@data$counts
 rownames(tms_marrow_counts) <- rownames(tms_marrow$Marrow)
 colnames(tms_marrow_counts) <- colnames(tms_marrow$Marrow)
 tms_marrow_counts <- as(tms_marrow_counts, "dgCMatrix")
 
-tms_marrow_ages <- which(tms_marrow$Marrow$age \%in\% c("3m", "30m"))
-tms_marrow_cell_types <- which(tms_marrow$Marrow$cell_ontology_class \%in\% c(
-'hematopoietic precursor cell', 'megakaryocyte-erythroid progenitor cell',
-'precursor B cell'))
-tms_marrow_counts <- tms_marrow_counts[, intersect(tms_marrow_ages, tms_marrow_cell_types)]
+# Subset age groups and cell types
+subset_ages <- which(tms_marrow$Marrow$age \%in\% c("3m", "30m"))
+subset_cell_types <- which(tms_marrow$Marrow$cell_ontology_class \%in\% c(
+  "hematopoietic precursor cell", "megakaryocyte-erythroid progenitor cell",
+  "precursor B cell"
+))
+tms_marrow_counts <- tms_marrow_counts[, intersect(subset_ages, subset_cell_types)]
 
-# tms_marrow_manifold_saver <- compute_manifold(tms_marrow_counts, method = "SAVER")
+# Compute the manifold using both methods
+tms_marrow_manifold_saver <- compute_manifold(tms_marrow_counts, method = "SAVER")
 tms_marrow_manifold_neighbor <- compute_manifold(tms_marrow_counts, method = "neighbor")
 }

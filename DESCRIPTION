@@ -2,7 +2,8 @@ Package: INClock
 Title: Intrinsic Noise based cellular aging Clock
 Version: 0.0.1
 Authors@R: 
-    person("Yilin", "Yang", , "yang1222@wharton.upenn.edu", role = c("aut", "cre"))
+    person("Yilin", "Yang", , "yang1222@wharton.upenn.edu", role = c("aut", "cre"),
+          comment = c(ORCID = "0009-0009-8301-3918"))
 Description: Compute cellular aging measures based on intrinsic noise estimates from single-cell transcriptomics.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -23,3 +24,4 @@ Remotes:
     mohuangx/SAVER,
     EddieYang1222/SAVER_D,
     fmicompbio/TabulaMurisSenisData
+URL: https://eddieyang1222.github.io/INClock/
