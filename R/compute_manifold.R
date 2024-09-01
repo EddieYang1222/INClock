@@ -60,7 +60,7 @@ compute_manifold <- function(counts, method = "SAVER", preprocess = TRUE,
     # Calculate mean count for each cell
     manifold_counts <- GetAssayData(object = manifold_obj, assay = "RNA", layer = "counts")
     print(paste0("Successfully extracted the nearest neighbors. Estimation procedure is starting."))
-    manifold <- Matrix::sparseMatrix(
+    manifold <- sparseMatrix(
       i = integer(0), j = integer(0),
       dims = manifold_counts@Dim, dimnames = manifold_counts@Dimnames
     )
