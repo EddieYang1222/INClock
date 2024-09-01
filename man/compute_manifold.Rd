@@ -41,18 +41,16 @@ Compute the manifold of gene expressions
 }
 \examples{
 # Loading test data from Tabula Muris Senis
-devtools::install_github("fmicompbio/TabulaMurisSenisData")
-library(TabulaMurisSenisData)
-tms_marrow <- TabulaMurisSenisDroplet(tissues = "Marrow")
+data("tms_marrow")
 tms_marrow_counts <- tms_marrow$Marrow@assays@data$counts
 rownames(tms_marrow_counts) <- rownames(tms_marrow$Marrow)
 colnames(tms_marrow_counts) <- colnames(tms_marrow$Marrow)
 tms_marrow_counts <- as(tms_marrow_counts, "dgCMatrix")
 
 tms_marrow_ages <- which(tms_marrow$Marrow$age \%in\% c("3m", "30m"))
-tms_marrow_cell_types <- which(tms_marrow$Marrow$cell_ontology_class \%in\% c('erythroid progenitor',
-'granulocytopoietic cell', 'hematopoietic precursor cell',
-'megakaryocyte-erythroid progenitor cell', 'precursor B cell'))
+tms_marrow_cell_types <- which(tms_marrow$Marrow$cell_ontology_class \%in\% c(
+'hematopoietic precursor cell', 'megakaryocyte-erythroid progenitor cell',
+'precursor B cell'))
 tms_marrow_counts <- tms_marrow_counts[, intersect(tms_marrow_ages, tms_marrow_cell_types)]
 
 # tms_marrow_manifold_saver <- compute_manifold(tms_marrow_counts, method = "SAVER")
