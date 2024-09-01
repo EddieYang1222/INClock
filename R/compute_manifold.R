@@ -44,8 +44,8 @@ compute_manifold <- function(counts, method = "SAVER", preprocess = TRUE,
     start.time <- Sys.time()
     manifold <- SAVER::saver(counts, ncores = ncores)
     end.time <- Sys.time()
-    time.taken <- round(difftime(end.time, start.time), 2)
-    message("Finished computing manifold using SAVER. Time taken: ", time.taken, ".\n")
+    time.taken <- round(difftime(end.time, start.time, units = "secs"), 2)
+    message("Finished computing manifold using SAVER. Time taken: ", time.taken, " seconds.\n")
     manifold
   } else if (method == "neighbor") {
     # Find neighbors
@@ -76,8 +76,8 @@ compute_manifold <- function(counts, method = "SAVER", preprocess = TRUE,
     manifold <- t(manifold)
 
     end.time <- Sys.time()
-    time.taken <- round(difftime(end.time, start.time), 2)
-    print(paste0("Finished computing manifold using the neighbor-based method. Time taken: ", time.taken, ".\n"))
+    time.taken <- round(difftime(end.time, start.time, units = "secs"), 2)
+    print(paste0("Finished computing manifold using the neighbor-based method. Time taken: ", time.taken, " seconds.\n"))
     manifold
   } else {
     stop("Invalid method specified. Choose either 'SAVER' or 'neighbor'.")
