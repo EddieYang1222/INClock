@@ -132,5 +132,5 @@ estimate_dispersion <- function(counts, manifold, cell.types, ages, model = "cCV
     }
     dispersion.list[[cell.types.levels[i]]] <- celltype.disp
   }
-  dispersion.list
+  return(dispersion.list)
 }

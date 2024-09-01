@@ -46,7 +46,7 @@ compute_manifold <- function(counts, method = "SAVER", preprocess = TRUE,
     end.time <- Sys.time()
     time.taken <- round(difftime(end.time, start.time, units = "secs"), 2)
     message("Finished computing manifold using SAVER. Time taken: ", time.taken, " seconds.\n")
-    manifold
+    return(manifold)
   } else if (method == "neighbor") {
     # Find neighbors
     message("Estimating the manifold using the neighbor-based method...\n")
@@ -78,7 +78,7 @@ compute_manifold <- function(counts, method = "SAVER", preprocess = TRUE,
     end.time <- Sys.time()
     time.taken <- round(difftime(end.time, start.time, units = "secs"), 2)
     print(paste0("Finished computing manifold using the neighbor-based method. Time taken: ", time.taken, " seconds.\n"))
-    manifold
+    return(manifold)
   } else {
     stop("Invalid method specified. Choose either 'SAVER' or 'neighbor'.")
   }
