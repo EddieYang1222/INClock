@@ -2,7 +2,6 @@
 
 export(compute_manifold)
 export(estimate_dispersion)
-import(S4Vectors)
 importFrom(Matrix,colSums)
 importFrom(Matrix,rowMeans)
 importFrom(Matrix,rowSums)

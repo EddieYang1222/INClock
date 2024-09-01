@@ -25,12 +25,13 @@
 #' of dispersion parameters for a cell type. The columns in each table contain
 #' dispersion parameters for each age group.
 #' @importFrom Matrix rowSums colSums
-#' @import S4Vectors
 #' @export
 #'
 #' @examples
 #' # Loading test data from Tabula Muris Senis
-#' data("tms_marrow")
+#' devtools::install_github('fmicompbio/TabulaMurisSenisData')
+#' library(TabulaMurisSenisData)
+#' tms_marrow <- TabulaMurisSenisDroplet(tissues = "Marrow")
 #' tms_marrow_counts <- tms_marrow$Marrow@assays@data$counts
 #' rownames(tms_marrow_counts) <- rownames(tms_marrow$Marrow)
 #' colnames(tms_marrow_counts) <- colnames(tms_marrow$Marrow)

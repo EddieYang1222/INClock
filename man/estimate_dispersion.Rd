@@ -60,7 +60,9 @@ Estimate dispersion parameters
 }
 \examples{
 # Loading test data from Tabula Muris Senis
-data("tms_marrow")
+devtools::install_github('fmicompbio/TabulaMurisSenisData')
+library(TabulaMurisSenisData)
+tms_marrow <- TabulaMurisSenisDroplet(tissues = "Marrow")
 tms_marrow_counts <- tms_marrow$Marrow@assays@data$counts
 rownames(tms_marrow_counts) <- rownames(tms_marrow$Marrow)
 colnames(tms_marrow_counts) <- colnames(tms_marrow$Marrow)

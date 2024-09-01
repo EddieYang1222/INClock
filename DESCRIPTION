@@ -16,8 +16,8 @@ Imports:
     Matrix,
     Seurat,
     pbapply,
-    methods,
-    S4Vectors
+    methods
 Remotes:
     mohuangx/SAVER,
-    EddieYang1222/SAVER_D
+    EddieYang1222/SAVER_D,
+    fmicompbio/TabulaMurisSenisData
