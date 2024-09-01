@@ -1,6 +1,6 @@
 ^renv$
 ^renv\.lock$
-^Intrinomap\.Rproj$
+^INClock\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^\.github$
