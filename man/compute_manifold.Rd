@@ -41,7 +41,6 @@ Compute the manifold of gene expressions
 }
 \examples{
 # Loading test data from Tabula Muris Senis
-devtools::install_github("fmicompbio/TabulaMurisSenisData")
 library(TabulaMurisSenisData)
 tms_marrow <- TabulaMurisSenisDroplet(tissues = "Marrow")
 tms_marrow_counts <- tms_marrow$Marrow@assays@data$counts
