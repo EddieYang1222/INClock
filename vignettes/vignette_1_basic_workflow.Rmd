@@ -4,7 +4,7 @@ author: "Yilin Yang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Vignette 1: Basic workflow of INClock}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 ## Vignette Info
 
-This Vignette depicts a basic workflow of INClock that generates dispersion parameters for each cell type / age group. Examples of downstream analyses can be found in other vignettes.
+This vignette depicts a basic workflow of INClock that generates dispersion parameters for each cell type / age group. Examples of downstream analyses can be found in other vignettes.
 
 ```{r eval=FALSE}
 library("INClock")
@@ -53,7 +53,7 @@ We can simply call `compute_manifold()` to compute the manifold matrix for our t
 
 The matrix has to be in either `matrix` or `dgCMatrix` format, as required by dependent packages such as [SAVER](https://mohuangx.github.io/SAVER/) and [Seurat](https://satijalab.org/seurat/).
 
-Before running, we need to specify the method to use, either `'SAVER'` or `'neighbor'`. If `'SAVER'` is selected, then you have the following customizable options:
+Before running, we need to specify the `method` to use, either `'SAVER'` or `'neighbor'`. If `'SAVER'` is selected, then you have the following customizable options:
 
 * Number of CPU cores to use. Default is 1. (`ncores`)
 
@@ -63,7 +63,7 @@ If `'neighbor'` is selected, then you have the following customizable options:
 * Number of dimensions for finding nearest neighbors. Default is 20. (`dims`)
 * Number of neighbors to output. Default is 20. (`neighbors`)
 
-The number of features and dimensions typically don't affect the quality of the manifold much. The number of neighbors used, however, can somewhat affect. To facilitate an optimal selection of number of neighbors, it is recommended to go through Vignette 3. From our previous tests, datasets of sizes less than 100,000 cells typically have an optimal number of neighbors around 20 to 30.
+The number of features and dimensions typically don't affect the quality of the manifold much. The number of neighbors used, however, can somewhat affect. To facilitate an optimal selection of number of neighbors, it is recommended to go through Vignette 3. From our previous tests, datasets of less than 100,000 cells typically have an optimal number of neighbors around 20 to 30.
 
 ```{r eval=FALSE}
 # Compute the manifold with SAVER
@@ -72,3 +72,39 @@ tms_marrow_manifold_saver <- compute_manifold(tms_marrow_counts, method = "SAVER
 # Compute the manifold with neighbor-based method
 tms_marrow_manifold_neighbor <- compute_manifold(tms_marrow_counts, method = "neighbor")
 ```
+
+The output will be the manifold matrix of the same dimensions as the original count matrix, but of course it is not sparse any more. Be cautious that this step will use relatively large memory.
+
+## Estimate dispersion parameters
+
+Now that we have the manifold computed, we can call `estimate_dispersion` to estimate the dispersion parameters. The function takes the following inputs:
+
+* Gene expression count matrix (Gene by Cell) (`counts`)
+* Manifold matrix (`manifold`)
+* A vector of cell types each cell in the dataset belongs to (`cell.types`)
+* A vector of age groups each cell in the dataset belongs to (`ages`)
+
+It is also necessary to choose a variance `model` for the estimation, which can be `'cCV'` (constant Coefficient of Variation), `'cFF'` (constant Fano Factor), or 
+`'cVar'` (constant Variance). We recommend using constant CV, which is also the default model to be used.
+
+Besides, there are a few more options to customize the process:
+
+* Number of CPU cores to use. Default is 1. (`ncores`)
+* Cell size normalization factors. Default uses mean library size normalization. (`size.factor`)
+* A vector of cell types labels that will be used in the estimation process. (`cell.types.to.use`)
+* A vector of age group labels that will be used in the estimation process. (`ages.to.use`)
+* Minimum number of cells in a cell type / age group. Groups with fewer cells than this number will be skipped. Default is 10. (`cell.types.cutoff`)
+
+```{r eval=FALSE}
+# Create cell type and age labels
+tms_marrow_cell_types <- tms_marrow$Marrow$cell_ontology_class[intersect(subset_ages, subset_cell_types)]
+tms_marrow_ages <- tms_marrow$Marrow$age[intersect(subset_ages, subset_cell_types)]
+
+# Estimate the dispersion parameters using constant CV
+tms_marrow_dispersions <- estimate_dispersion(tms_marrow_counts, tms_marrow_manifold_neighbor,
+  tms_marrow_cell_types, tms_marrow_ages,
+  model = "cCV", ncores = 2
+)
+```
+
+Finally, we are able to generate a list object containing multiple dataframes, each of which corresponds to a cell type. In each dataframe, the first column will be genes, and the later ones will be the dispersion parameter values for each age group.
