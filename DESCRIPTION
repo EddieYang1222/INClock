@@ -10,7 +10,9 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests: 
-    renv
+    knitr,
+    renv,
+    rmarkdown
 Depends: 
     R (>= 4.2.0)
 Imports: 
@@ -25,3 +27,4 @@ Remotes:
     EddieYang1222/SAVER_D,
     fmicompbio/TabulaMurisSenisData
 URL: https://eddieyang1222.github.io/INClock/
+VignetteBuilder: knitr

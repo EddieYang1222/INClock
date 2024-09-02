@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -20,8 +20,8 @@ knitr::opts_chunk$set(
 
 This vignette depicts a basic workflow of INClock that generates dispersion parameters for each cell type / age group. Examples of downstream analyses can be found in other vignettes.
 
-```{r eval=FALSE}
-library("INClock")
+```{r setup}
+library(INClock)
 ```
 
 ## Prepare the test data
