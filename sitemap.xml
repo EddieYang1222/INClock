@@ -1,11 +1,13 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>/404.html</loc></url>
-<url><loc>/LICENSE-text.html</loc></url>
-<url><loc>/LICENSE.html</loc></url>
-<url><loc>/authors.html</loc></url>
-<url><loc>/index.html</loc></url>
-<url><loc>/reference/compute_manifold.html</loc></url>
-<url><loc>/reference/estimate_dispersion.html</loc></url>
-<url><loc>/reference/index.html</loc></url>
+<url><loc>https://eddieyang1222.github.io/INClock/404.html</loc></url>
+<url><loc>https://eddieyang1222.github.io/INClock/LICENSE-text.html</loc></url>
+<url><loc>https://eddieyang1222.github.io/INClock/LICENSE.html</loc></url>
+<url><loc>https://eddieyang1222.github.io/INClock/articles/index.html</loc></url>
+<url><loc>https://eddieyang1222.github.io/INClock/articles/vignette_1_basic_workflow.html</loc></url>
+<url><loc>https://eddieyang1222.github.io/INClock/authors.html</loc></url>
+<url><loc>https://eddieyang1222.github.io/INClock/index.html</loc></url>
+<url><loc>https://eddieyang1222.github.io/INClock/reference/compute_manifold.html</loc></url>
+<url><loc>https://eddieyang1222.github.io/INClock/reference/estimate_dispersion.html</loc></url>
+<url><loc>https://eddieyang1222.github.io/INClock/reference/index.html</loc></url>
 </urlset>
 
