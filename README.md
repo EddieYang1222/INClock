@@ -1,10 +1,10 @@
 # INClock
-INClock (**I**ntrinsic **N**oise based cellular aging **Clock**) provides a robust and scalable measure for cellular aging and senescence by estimating intrinsic transcriptional noise from single-cell RNA sequencing data. By using this package, you are capable of:
+INClock (**I**ntrinsic **N**oise based cellular aging **Clock**) provides a robust and scalable measure for cellular aging by estimating intrinsic transcriptional noise from single-cell RNA sequencing data. By using this package, you are capable of:
 
-1. Compute a manifold that approximates the true state of cells using two methods:
+1. Compute a manifold that approximates the true state of cells using either of the following two methods:
   + Decompose cellular variation using [SAVER](https://mohuangx.github.io/SAVER/)
   + Average across k nearest neighbors (more efficient)
-2. Estimate the dispersion parameters for each cell types / age groups using [an updated version of SAVER](https://github.com/EddieYang1222/SAVER_D)
+2. Estimate the gene-level dispersion parameters for each cell type and associate them with different age groups
 
 ## Installation
 
