@@ -22,7 +22,5 @@ R version `> 4.2.0` is recommended.
 For any questions regarding the package, please contact Yilin Yang (yang1222@wharton.upenn.edu) or Nancy Zhang (nzh@wharton.upenn.edu).
 
 <!-- badges: start -->
-<<<<<<< HEAD
 [![R-CMD-check](https://github.com/EddieYang1222/INClock/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/EddieYang1222/INClock/actions/workflows/R-CMD-check.yaml)
->>>>>>> 4a2580aab71d0b58fb23867b389620f3d1053ff2
 <!-- badges: end -->
