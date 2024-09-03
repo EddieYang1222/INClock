@@ -56,9 +56,9 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="inclock">INClock<a class="anchor" aria-label="anchor" href="#inclock"></a>
 </h1></div>
-<p>INClock (<strong>I</strong>ntrinsic <strong>N</strong>oise based cellular aging <strong>Clock</strong>) provides a robust and scalable measure for cellular aging and senescence by estimating intrinsic transcriptional noise from single-cell RNA sequencing data. By using this package, you are capable of:</p>
+<p>INClock (<strong>I</strong>ntrinsic <strong>N</strong>oise based cellular aging <strong>Clock</strong>) provides a robust and scalable measure for cellular aging by estimating intrinsic transcriptional noise from single-cell RNA sequencing data. By using this package, you are capable of:</p>
 <ol style="list-style-type: decimal">
-<li>Compute a manifold that approximates the true state of cells using two methods:</li>
+<li>Compute a manifold that approximates the true state of cells using either of the following two methods:</li>
 </ol>
 <ul>
 <li>Decompose cellular variation using <a href="https://mohuangx.github.io/SAVER/" class="external-link">SAVER</a>
@@ -66,8 +66,7 @@
 <li>Average across k nearest neighbors (more efficient)</li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li>Estimate the dispersion parameters for each cell types / age groups using <a href="https://github.com/EddieYang1222/SAVER_D" class="external-link">an updated version of SAVER</a>
-</li>
+<li>Estimate the gene-level dispersion parameters for each cell type and associate them with different age groups</li>
 </ol>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
