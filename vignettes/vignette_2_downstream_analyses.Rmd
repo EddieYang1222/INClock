@@ -1,5 +1,5 @@
 ---
-title: "Vignette 1: Downstream analyses"
+title: "Vignette 2: Downstream analyses"
 author: "Yilin Yang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
