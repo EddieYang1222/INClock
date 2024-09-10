@@ -95,11 +95,11 @@ for (name in names(tms_marrow_dispersions)) {
 
 Below, we showcase two examples of the violin plots following our previous codes.
 
-```{r, out.width='80%', fig.cap="Example 1: violin plot for gene level dispersions", echo=FALSE}
+```{r, out.width='80%', fig.cap="Example 1: violin plot for gene level dispersions", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/dispersion_plot_example.png")
 ```
 
-```{r, out.width='80%', fig.cap="Example 2: violin plot for log-fold changes", echo=FALSE}
+```{r, out.width='80%', fig.cap="Example 2: violin plot for log-fold changes", fig.align='center', echo=FALSE}
 knitr::include_graphics("figures/log_fold_change_plot_example.png")
 ```
 
