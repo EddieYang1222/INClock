@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Vignette 1: Basic workflow of INClock • INClock</title>
+<title>Vignette 1: Basic workflow • INClock</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.9/font.css" rel="stylesheet">
@@ -13,7 +13,7 @@
 <link href="../deps/Roboto_Slab-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Vignette 1: Basic workflow of INClock">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Vignette 1: Basic workflow">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -36,7 +36,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/vignette_1_basic_workflow.html">Vignette 1: Basic workflow of INClock</a></li>
+<li><a class="dropdown-item" href="../articles/vignette_1_basic_workflow.html">Vignette 1: Basic workflow</a></li>
+    <li><a class="dropdown-item" href="../articles/vignette_2_downstream_analyses.html">Vignette 1: Downstream analyses</a></li>
   </ul>
 </li>
       </ul>
@@ -57,10 +58,10 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Vignette 1: Basic workflow of INClock</h1>
+      <h1>Vignette 1: Basic workflow</h1>
                         <h4 data-toc-skip class="author">Yilin Yang</h4>
             
-            <h4 data-toc-skip class="date">2024-09-03</h4>
+            <h4 data-toc-skip class="date">2024-09-10</h4>
       
 
       <div class="d-none name"><code>vignette_1_basic_workflow.Rmd</code></div>
@@ -73,7 +74,7 @@
 </h2>
 <p>This vignette depicts a basic workflow of INClock that generates
 dispersion parameters for each cell type / age group. Examples of
-downstream analyses can be found in other vignettes.</p>
+downstream analyses can be found in Vignette 2.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://eddieyang1222.github.io/INClock/">INClock</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -86,7 +87,9 @@ marrow cells of mouse at different ages. As the original dataset is too
 large for demonstration, we will only take a subset of its most relevant
 cell types and age groups, which includes one younger (3 months) and one
 older (30 months) age groups, as well as several stem cell types, such
-as hematopoietic precursor cell (HSC). The dataset is loaded with <a href="https://fmicompbio.github.io/TabulaMurisSenisData/" class="external-link">TabulaMurisSenisData</a>,
+as hematopoietic precursor cell (HSC). Ideally, if you want to reproduce
+results similar to the ones in our paper, you should probably ignore the
+subsetting part of data preparation below. The dataset is loaded with <a href="https://fmicompbio.github.io/TabulaMurisSenisData/" class="external-link">TabulaMurisSenisData</a>,
 which is already integrated into our package for test purposes.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load test data from Tabula Muris Senis</span></span>
@@ -96,7 +99,7 @@ which is already integrated into our package for test purposes.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">tms_marrow_counts</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">tms_marrow</span><span class="op">$</span><span class="va">Marrow</span><span class="op">)</span></span>
 <span><span class="va">tms_marrow_counts</span> <span class="op">&lt;-</span> <span class="fu">as</span><span class="op">(</span><span class="va">tms_marrow_counts</span>, <span class="st">"dgCMatrix"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Subset age groups and cell types</span></span>
+<span><span class="co"># Subset age groups and cell types (ignore if to reproduce results from paper)</span></span>
 <span><span class="va">subset_ages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">tms_marrow</span><span class="op">$</span><span class="va">Marrow</span><span class="op">$</span><span class="va">age</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"3m"</span>, <span class="st">"30m"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">subset_cell_types</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">tms_marrow</span><span class="op">$</span><span class="va">Marrow</span><span class="op">$</span><span class="va">cell_ontology_class</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"hematopoietic precursor cell"</span>, <span class="st">"megakaryocyte-erythroid progenitor cell"</span>,</span>
@@ -137,9 +140,9 @@ customizable options:</p>
 <p>The number of features and dimensions typically don’t affect the
 quality of the manifold much. The number of neighbors used, however, can
 somewhat affect. To facilitate an optimal selection of number of
-neighbors, it is recommended to go through Vignette 3. From our previous
-tests, datasets of less than 100,000 cells typically have an optimal
-number of neighbors around 20 to 30.</p>
+neighbors, it is recommended to go through Vignette 3 (WIP). From our
+previous tests, datasets of less than 100,000 cells typically have an
+optimal number of neighbors around 20 to 30.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compute the manifold with SAVER</span></span>
 <span><span class="va">tms_marrow_manifold_saver</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_manifold.html">compute_manifold</a></span><span class="op">(</span><span class="va">tms_marrow_counts</span>, method <span class="op">=</span> <span class="st">"SAVER"</span><span class="op">)</span></span>
@@ -148,7 +151,7 @@ number of neighbors around 20 to 30.</p>
 <span><span class="va">tms_marrow_manifold_neighbor</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_manifold.html">compute_manifold</a></span><span class="op">(</span><span class="va">tms_marrow_counts</span>, method <span class="op">=</span> <span class="st">"neighbor"</span><span class="op">)</span></span></code></pre></div>
 <p>The output will be the manifold matrix of the same dimensions as the
 original count matrix, but of course it is not sparse any more. Be
-cautious that this step will use relatively large memory.</p>
+cautious that this step will use relatively large amount of memory.</p>
 </div>
 <div class="section level2">
 <h2 id="estimate-dispersion-parameters">Estimate dispersion parameters<a class="anchor" aria-label="anchor" href="#estimate-dispersion-parameters"></a>
@@ -184,9 +187,13 @@ fewer cells than this number will be skipped. Default is 10.
 (<code>cell.types.cutoff</code>)</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create cell type and age labels</span></span>
+<code class="sourceCode R"><span><span class="co"># Create cell type and age labels (for demonstration)</span></span>
 <span><span class="va">tms_marrow_cell_types</span> <span class="op">&lt;-</span> <span class="va">tms_marrow</span><span class="op">$</span><span class="va">Marrow</span><span class="op">$</span><span class="va">cell_ontology_class</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">intersect</a></span><span class="op">(</span><span class="va">subset_ages</span>, <span class="va">subset_cell_types</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">tms_marrow_ages</span> <span class="op">&lt;-</span> <span class="va">tms_marrow</span><span class="op">$</span><span class="va">Marrow</span><span class="op">$</span><span class="va">age</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">intersect</a></span><span class="op">(</span><span class="va">subset_ages</span>, <span class="va">subset_cell_types</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Create cell type and age labels (to reproduce results from paper)</span></span>
+<span><span class="co"># tms_marrow_cell_types &lt;- tms_marrow$Marrow$cell_ontology_class</span></span>
+<span><span class="co"># tms_marrow_ages &lt;- tms_marrow$Marrow$age</span></span>
 <span></span>
 <span><span class="co"># Estimate the dispersion parameters using constant CV</span></span>
 <span><span class="va">tms_marrow_dispersions</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimate_dispersion.html">estimate_dispersion</a></span><span class="op">(</span><span class="va">tms_marrow_counts</span>, <span class="va">tms_marrow_manifold_neighbor</span>,</span>
