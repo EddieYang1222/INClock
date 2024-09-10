@@ -1,10 +1,10 @@
 ---
-title: "Vignette 1: Basic workflow of INClock"
+title: "Vignette 1: Basic workflow"
 author: "Yilin Yang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette 1: Basic workflow of INClock}
+  %\VignetteIndexEntry{Vignette 1: Basic workflow}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 ## Vignette Info
 
-This vignette depicts a basic workflow of INClock that generates dispersion parameters for each cell type / age group. Examples of downstream analyses can be found in other vignettes.
+This vignette depicts a basic workflow of INClock that generates dispersion parameters for each cell type / age group. Examples of downstream analyses can be found in Vignette 2.
 
 ```{r setup}
 library(INClock)
@@ -26,7 +26,7 @@ library(INClock)
 
 ## Prepare the test data
 
-We will use single-cell RNA sequencing data from [Tabula Muris Senis](https://tabula-muris-senis.ds.czbiohub.org/) as our test data. Specifically, it concerns with the bone marrow cells of mouse at different ages. As the original dataset is too large for demonstration, we will only take a subset of its most relevant cell types and age groups, which includes one younger (3 months) and one older (30 months) age groups, as well as several stem cell types, such as hematopoietic precursor cell (HSC). The dataset is loaded with [TabulaMurisSenisData](https://fmicompbio.github.io/TabulaMurisSenisData/), which is already integrated into our package for test purposes.
+We will use single-cell RNA sequencing data from [Tabula Muris Senis](https://tabula-muris-senis.ds.czbiohub.org/) as our test data. Specifically, it concerns with the bone marrow cells of mouse at different ages. As the original dataset is too large for demonstration, we will only take a subset of its most relevant cell types and age groups, which includes one younger (3 months) and one older (30 months) age groups, as well as several stem cell types, such as hematopoietic precursor cell (HSC). Ideally, if you want to reproduce results similar to the ones in our paper, you should probably ignore the subsetting part of data preparation below. The dataset is loaded with [TabulaMurisSenisData](https://fmicompbio.github.io/TabulaMurisSenisData/), which is already integrated into our package for test purposes.
 
 ```{r eval=FALSE}
 # Load test data from Tabula Muris Senis
@@ -36,7 +36,7 @@ rownames(tms_marrow_counts) <- rownames(tms_marrow$Marrow)
 colnames(tms_marrow_counts) <- colnames(tms_marrow$Marrow)
 tms_marrow_counts <- as(tms_marrow_counts, "dgCMatrix")
 
-# Subset age groups and cell types
+# Subset age groups and cell types (ignore if to reproduce results from paper)
 subset_ages <- which(tms_marrow$Marrow$age %in% c("3m", "30m"))
 subset_cell_types <- which(tms_marrow$Marrow$cell_ontology_class %in% c(
   "hematopoietic precursor cell", "megakaryocyte-erythroid progenitor cell",
@@ -63,7 +63,7 @@ If `'neighbor'` is selected, then you have the following customizable options:
 * Number of dimensions for finding nearest neighbors. Default is 20. (`dims`)
 * Number of neighbors to output. Default is 20. (`neighbors`)
 
-The number of features and dimensions typically don't affect the quality of the manifold much. The number of neighbors used, however, can somewhat affect. To facilitate an optimal selection of number of neighbors, it is recommended to go through Vignette 3. From our previous tests, datasets of less than 100,000 cells typically have an optimal number of neighbors around 20 to 30.
+The number of features and dimensions typically don't affect the quality of the manifold much. The number of neighbors used, however, can somewhat affect. To facilitate an optimal selection of number of neighbors, it is recommended to go through Vignette 3 (WIP). From our previous tests, datasets of less than 100,000 cells typically have an optimal number of neighbors around 20 to 30.
 
 ```{r eval=FALSE}
 # Compute the manifold with SAVER
@@ -73,7 +73,7 @@ tms_marrow_manifold_saver <- compute_manifold(tms_marrow_counts, method = "SAVER
 tms_marrow_manifold_neighbor <- compute_manifold(tms_marrow_counts, method = "neighbor")
 ```
 
-The output will be the manifold matrix of the same dimensions as the original count matrix, but of course it is not sparse any more. Be cautious that this step will use relatively large memory.
+The output will be the manifold matrix of the same dimensions as the original count matrix, but of course it is not sparse any more. Be cautious that this step will use relatively large amount of memory.
 
 ## Estimate dispersion parameters
 
@@ -96,9 +96,13 @@ Besides, there are a few more options to customize the process:
 * Minimum number of cells in a cell type / age group. Groups with fewer cells than this number will be skipped. Default is 10. (`cell.types.cutoff`)
 
 ```{r eval=FALSE}
-# Create cell type and age labels
+# Create cell type and age labels (for demonstration)
 tms_marrow_cell_types <- tms_marrow$Marrow$cell_ontology_class[intersect(subset_ages, subset_cell_types)]
 tms_marrow_ages <- tms_marrow$Marrow$age[intersect(subset_ages, subset_cell_types)]
+
+# Create cell type and age labels (to reproduce results from paper)
+# tms_marrow_cell_types <- tms_marrow$Marrow$cell_ontology_class
+# tms_marrow_ages <- tms_marrow$Marrow$age
 
 # Estimate the dispersion parameters using constant CV
 tms_marrow_dispersions <- estimate_dispersion(tms_marrow_counts, tms_marrow_manifold_neighbor,

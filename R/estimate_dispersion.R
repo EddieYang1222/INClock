@@ -120,11 +120,11 @@ estimate_dispersion <- function(counts, manifold, cell.types, ages, model = "cCV
 
         # assign(paste0("data.size",j), sum(index))
         if (model == "cCV") {
-          assign(paste0("data.disp", j), celltype.saver.age$a)
+          assign(paste0("data.disp", j), 1 / celltype.saver.age$a)
         } else if (model == "cFF") {
-          assign(paste0("data.disp", j), celltype.saver.age$b)
+          assign(paste0("data.disp", j), 1 / celltype.saver.age$b)
         } else if (model == "cVar") {
-          assign(paste0("data.disp", j), 1 / celltype.saver.age$k)
+          assign(paste0("data.disp", j), celltype.saver.age$k)
         } else {
           stop("Invalid model specified. Choose either 'cCV', 'cFF', or 'cVar'.")
         }
