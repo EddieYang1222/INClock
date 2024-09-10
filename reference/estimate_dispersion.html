@@ -19,7 +19,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/vignette_1_basic_workflow.html">Vignette 1: Basic workflow</a></li>
-    <li><a class="dropdown-item" href="../articles/vignette_2_downstream_analyses.html">Vignette 1: Downstream analyses</a></li>
+    <li><a class="dropdown-item" href="../articles/vignette_2_downstream_analyses.html">Vignette 2: Downstream analyses</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -197,7 +197,7 @@ dispersion parameters for each age group.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing nearest neighbors</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Only one graph name supplied, storing nearest-neighbor graph only</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Successfully extracted the nearest neighbors. Estimation procedure is starting."</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished computing manifold using the neighbor-based method. Time taken: 7.44 seconds.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished computing manifold using the neighbor-based method. Time taken: 7.58 seconds.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Estimate the dispersion parameters</span></span></span>
 <span class="r-in"><span><span class="va">tms_marrow_cell_types</span> <span class="op">&lt;-</span> <span class="va">tms_marrow</span><span class="op">$</span><span class="va">Marrow</span><span class="op">$</span><span class="va">cell_ontology_class</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">intersect</a></span><span class="op">(</span></span></span>
@@ -216,81 +216,81 @@ dispersion parameters for each age group.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating dispersion parameters for 3m hematopoietic precursor cell</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 14812 genes, 285 cells</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running SAVER given prior means with 2 worker(s)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start time: 2024-09-10 07:27:02.789835</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start time: 2024-09-10 08:59:51.258432</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating finish time...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 100/14812 genes. Approximate finish time: 2024-09-10 07:27:30.394455</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 3778/14812 genes. Approximate finish time: 2024-09-10 07:27:31.607284</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 7456/14812 genes. Approximate finish time: 2024-09-10 07:27:31.833886</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 11134/14812 genes. Approximate finish time: 2024-09-10 07:27:31.776259</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 14812/14812 genes. Approximate finish time: 2024-09-10 07:27:31.597539</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 100/14812 genes. Approximate finish time: 2024-09-10 09:00:19.31336</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 3778/14812 genes. Approximate finish time: 2024-09-10 09:00:21.783056</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 7456/14812 genes. Approximate finish time: 2024-09-10 09:00:21.944574</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 11134/14812 genes. Approximate finish time: 2024-09-10 09:00:21.623464</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 14812/14812 genes. Approximate finish time: 2024-09-10 09:00:21.434192</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Done!</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finish time: 2024-09-10 07:27:31.598027</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Total time: 28.80805 secs</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finish time: 2024-09-10 09:00:21.434724</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total time: 30.17616 secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating dispersion parameters for 30m hematopoietic precursor cell</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 14812 genes, 524 cells</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running SAVER given prior means with 2 worker(s)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start time: 2024-09-10 07:27:32.389162</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start time: 2024-09-10 09:00:22.306396</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating finish time...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 100/14812 genes. Approximate finish time: 2024-09-10 07:28:11.595012</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 3778/14812 genes. Approximate finish time: 2024-09-10 07:28:14.697589</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 7456/14812 genes. Approximate finish time: 2024-09-10 07:28:14.563883</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 11134/14812 genes. Approximate finish time: 2024-09-10 07:28:14.593863</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 14812/14812 genes. Approximate finish time: 2024-09-10 07:28:14.224937</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 100/14812 genes. Approximate finish time: 2024-09-10 09:01:02.736026</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 3778/14812 genes. Approximate finish time: 2024-09-10 09:01:06.199663</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 7456/14812 genes. Approximate finish time: 2024-09-10 09:01:05.30632</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 11134/14812 genes. Approximate finish time: 2024-09-10 09:01:05.598525</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 14812/14812 genes. Approximate finish time: 2024-09-10 09:01:05.525678</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Done!</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finish time: 2024-09-10 07:28:14.225439</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Total time: 41.83615 secs</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finish time: 2024-09-10 09:01:05.526193</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total time: 43.21967 secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating dispersion parameters for 3m megakaryocyte-erythroid progenitor cell</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 14812 genes, 133 cells</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running SAVER given prior means with 2 worker(s)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start time: 2024-09-10 07:28:14.579594</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start time: 2024-09-10 09:01:05.893432</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating finish time...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 100/14812 genes. Approximate finish time: 2024-09-10 07:28:40.319554</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 3778/14812 genes. Approximate finish time: 2024-09-10 07:28:44.573133</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 7456/14812 genes. Approximate finish time: 2024-09-10 07:28:44.198952</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 11134/14812 genes. Approximate finish time: 2024-09-10 07:28:43.937191</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 14812/14812 genes. Approximate finish time: 2024-09-10 07:28:43.981551</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 100/14812 genes. Approximate finish time: 2024-09-10 09:01:32.077951</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 3778/14812 genes. Approximate finish time: 2024-09-10 09:01:37.135976</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 7456/14812 genes. Approximate finish time: 2024-09-10 09:01:36.703722</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 11134/14812 genes. Approximate finish time: 2024-09-10 09:01:36.555809</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 14812/14812 genes. Approximate finish time: 2024-09-10 09:01:36.534699</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Done!</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finish time: 2024-09-10 07:28:43.982046</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Total time: 29.40232 secs</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finish time: 2024-09-10 09:01:36.535282</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total time: 30.64168 secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating dispersion parameters for 30m megakaryocyte-erythroid progenitor cell</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 14812 genes, 616 cells</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running SAVER given prior means with 2 worker(s)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start time: 2024-09-10 07:28:44.885691</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start time: 2024-09-10 09:01:37.553357</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating finish time...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 100/14812 genes. Approximate finish time: 2024-09-10 07:29:24.029803</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 3778/14812 genes. Approximate finish time: 2024-09-10 07:29:28.182003</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 7456/14812 genes. Approximate finish time: 2024-09-10 07:29:27.719373</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 11134/14812 genes. Approximate finish time: 2024-09-10 07:29:27.291891</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 14812/14812 genes. Approximate finish time: 2024-09-10 07:29:27.445561</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 100/14812 genes. Approximate finish time: 2024-09-10 09:02:18.037455</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 3778/14812 genes. Approximate finish time: 2024-09-10 09:02:21.742425</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 7456/14812 genes. Approximate finish time: 2024-09-10 09:02:21.310259</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 11134/14812 genes. Approximate finish time: 2024-09-10 09:02:21.061158</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 14812/14812 genes. Approximate finish time: 2024-09-10 09:02:21.121316</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Done!</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finish time: 2024-09-10 07:29:27.446134</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Total time: 42.56029 secs</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finish time: 2024-09-10 09:02:21.121847</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total time: 43.56836 secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating dispersion parameters for 3m precursor B cell</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 14812 genes, 259 cells</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running SAVER given prior means with 2 worker(s)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start time: 2024-09-10 07:29:27.870394</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start time: 2024-09-10 09:02:21.585304</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating finish time...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 100/14812 genes. Approximate finish time: 2024-09-10 07:29:50.510443</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 3778/14812 genes. Approximate finish time: 2024-09-10 07:29:52.365682</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 7456/14812 genes. Approximate finish time: 2024-09-10 07:29:52.296427</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 11134/14812 genes. Approximate finish time: 2024-09-10 07:29:52.304457</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 14812/14812 genes. Approximate finish time: 2024-09-10 07:29:52.459064</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 100/14812 genes. Approximate finish time: 2024-09-10 09:02:44.667025</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 3778/14812 genes. Approximate finish time: 2024-09-10 09:02:47.047548</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 7456/14812 genes. Approximate finish time: 2024-09-10 09:02:46.826968</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 11134/14812 genes. Approximate finish time: 2024-09-10 09:02:46.732575</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 14812/14812 genes. Approximate finish time: 2024-09-10 09:02:46.869589</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Done!</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finish time: 2024-09-10 07:29:52.459544</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Total time: 24.58901 secs</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finish time: 2024-09-10 09:02:46.870113</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total time: 25.28465 secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating dispersion parameters for 30m precursor B cell</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 14812 genes, 163 cells</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running SAVER given prior means with 2 worker(s)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start time: 2024-09-10 07:29:52.80029</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start time: 2024-09-10 09:02:47.227835</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating finish time...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 100/14812 genes. Approximate finish time: 2024-09-10 07:30:09.10312</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 3778/14812 genes. Approximate finish time: 2024-09-10 07:30:13.089595</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 7456/14812 genes. Approximate finish time: 2024-09-10 07:30:13.064435</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 11134/14812 genes. Approximate finish time: 2024-09-10 07:30:12.960584</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 14812/14812 genes. Approximate finish time: 2024-09-10 07:30:12.888118</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 100/14812 genes. Approximate finish time: 2024-09-10 09:03:03.941049</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 3778/14812 genes. Approximate finish time: 2024-09-10 09:03:08.001957</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 7456/14812 genes. Approximate finish time: 2024-09-10 09:03:08.037663</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 11134/14812 genes. Approximate finish time: 2024-09-10 09:03:07.94253</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished 14812/14812 genes. Approximate finish time: 2024-09-10 09:03:07.935933</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Done!</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Finish time: 2024-09-10 07:30:12.888621</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Total time: 20.08819 secs</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finish time: 2024-09-10 09:03:07.936434</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total time: 20.70846 secs</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
