@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```
 
 ## Vignette Info
-This vignette describes a few possible downstream analysis options for INClock outputs. Before proceeding with this vignette, you should consider working through Vignette 1 first to obtain the list of dispersion parameters. This Vignette assumes that you have obtained dispersion parameters from the neighbor-smoothing based manifold. Note that if you performed data subsetting in Vignette 1, the results from these downstream analyses may not be representative of findings from our paper, but feel free to replace the `tms_marrow_dispersions` object with the dispersion parameters estimated over the entire matrix.
+This vignette describes a few possible downstream analysis options for INClock outputs. Before proceeding with this vignette, you should consider working through Vignette 1 first to obtain the list of dispersion parameters. This vignette assumes that you have obtained dispersion parameters from the neighbor-smoothing based manifold. Note that if you performed data subsetting in Vignette 1, the results from these downstream analyses may not be representative of the findings from our paper, but feel free to replace the `tms_marrow_dispersions` object with the dispersion parameters estimated over the entire matrix.
 
 ## Analysis 1: Violin plots for cell type specific dispersion parameter distributions
 
